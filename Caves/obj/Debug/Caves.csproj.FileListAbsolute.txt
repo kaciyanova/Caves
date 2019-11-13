@@ -1,0 +1,6 @@
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/bin/Debug/Caves.exe
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/bin/Debug/Caves.pdb
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.csprojAssemblyReference.cache
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.csproj.CoreCompileInputs.cache
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.exe
+/Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.pdb
