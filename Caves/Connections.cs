@@ -8,17 +8,17 @@ namespace Caves
 
     class Connections
     {
-        //array of paths: int, double =destination cave index, path length
-        List<Cave>[] connections;
+        //array of paths: int=destination cave index, double= path length
+        List<Tuple<int,double>>[] connections;
 
 
         //constructor 
         public Connections(int numberOfCaves)
         {
-            connections = new List<Cave>[numberOfCaves];
+            connections = new List<Tuple<int,double>>[numberOfCaves];
             for (int i = 0; i < numberOfCaves; i++)
             {
-                connections[i] = new List<Cave>();
+                connections[i] = new List<Tuple<int,double>>();
             }
         }
 
@@ -27,7 +27,7 @@ namespace Caves
         {
             //right so since i think the connections will stay quite small i think i'll just sort the list at the end
 
-            connections[origin].Add(new Cave{destination, weight})};
+            connections[origin].Add(new Tuple<int,double>{destination, weight})};
 
 //            var childIndex = connections[origin].Count - 1;
 //

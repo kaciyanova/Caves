@@ -41,158 +41,13 @@ namespace Caves
 
             connections = GetConnections(caves, connections, numberOfCaves, caveConnections);
 
-            AStar(caves, connections);
+            AStar.Pathfinder(caves, connections);
         }
 
-        static string AStar(Tuple<Point, double>[] caves, Connections connections)
+//returns ordered list of all caves from coordinates list incl euclidian distance to destination cave & default max value shortest path
+        static Cave[] GetCaves(int[] caveCoordinates, int numberOfCaves)
         {
-            var pathTakenString = "1 ";
-
-            double pathLength = 0;
-            double gScore = 0;
-            //start at first node
-            var currentExploringCaveIndex = 0;
-
-            bool noPathPossible=false;
-
-            var open=new Queue<int>();
-            var closed=new List<int>();
-            
-            open.Enqueue(currentExploringCaveIndex);
-            
-            var cameFrom
-            while (open.Count>0)
-            {
-                var pathIndex = 0;
-
-                var currentIndex = open.First();
-
-                if (currentIndex==caves.Length)
-                {
-                    return pathTakenString+", "+currentIndex;
-                }
-
-                open.Dequeue();
-
-                var pathsFromCurrentCave = connections.GetPaths(currentExploringCaveIndex);
-
-                for (int i = 0; i < pathsFromCurrentCave.Count; i++)
-                {
-                    var node = pathsFromCurrentCave[i];
-                    
-                    var tentativeCost = pathLength + node.Item2;
-
-                    if (tentativeCost<gScore)
-                    {
-                        
-                    }
-                }
-                currentExploringCaveIndex = priorqueue[0];
-                closed.Add(currentExploringCaveIndex);
-                priorqueue.RemoveAt(0);
-
-                
-
-                for (int i = 0; i < pathsFromCurrentCave.Count; i++)
-                {
-                    var newcost=cost+
-                    if (!closed.Contains(currentExploringCaveIndex))
-                    {
-                        
-                    }
-                    if (open.Contains(pathsFromCurrentCave[i].Item1)&&)
-                    {
-                        
-                    }
-                }
-            }
-            
-            
-            do
-            {
-                open.Enqueue(currentExploringCaveIndex);
-                
-                var pathsFromCurrentCave = connections.Count(currentExploringCaveIndex);
-                
-                for (int i = 0; i < pathsFromCurrentCave; i++)
-                {
-                    var neighbourToExplore = connections.GetPaths(currentExploringCaveIndex)[i];
-                    if (closed.Contains(neighbourToExplore.Item1))
-                    {
-                        continue;
-                    }
-
-                    if (!open.Contains(caves[neighbourToExplore.Item1]))
-                    {
-                        
-                    }
-                   var closestCave = connections.ReturnPath(currentExploringCaveIndex, i);
-                  
-                   //checks if lowest cost cave is a dead end
-                    if (connections.Count(closestCave.Item1) > 0)
-                    {
-                        break;
-                    }
-
-                    if (i==pathsFromCurrentCave-1&&connections.Count(closestCave.Item1) ==0)
-                    {
-                        noPathPossible = true;
-                        break;
-                    }
-                }
-                
-            }
-            while (currentExploringCaveIndex!=caves.Length)
-
-            
-            //set cave to explore to lowest cost one
-            while (currentExploringCaveIndex != caves.Length - 1)
-            {
-                var nextCave = connections.ReturnPath(currentExploringCaveIndex, 0);
-//                Tuple<int, double> nextCave;
-
-                var pathsFromCurrentCave = connections.Count(currentExploringCaveIndex);
-                
-                for (int i = 0; i < pathsFromCurrentCave; i++)
-                {
-                    nextCave = connections.ReturnPath(currentExploringCaveIndex, i);
-                    //checks if lowest cost cave is a dead end
-                    if (connections.Count(nextCave.Item1) > 0)
-                    {
-                        break;
-                    }
-
-                    if (i==pathsFromCurrentCave-1&&connections.Count(nextCave.Item1) ==0)
-                    {
-                        noPathPossible = true;
-                        break;
-                    }
-                }
-
-                if (noPathPossible)
-                {
-                    shortestPath = "0";
-                    break;
-                }
-                
-                pathLength += nextCave.Item2;
-
-//                Console.WriteLine($"Exploring cave: {nextCave.Item1 + 1}");
-                Console.WriteLine($"Exploring cave: {nextCave.Item1 }");
-                Console.WriteLine($"Total path length: {pathLength}");
-
-                shortestPath = shortestPath + (nextCave.Item1 + 1) + " ";
-                currentExploringCaveIndex = nextCave.Item1;
-            }
-
-            Console.WriteLine($"Path: {shortestPath}");
-        }
-
-
-        //tuple has location and distance to final node
-        static Tuple<Point, double>[] GetCaves(int[] caveCoordinates, int numberOfCaves)
-        {
-            var caves = new Tuple<Point, double>[numberOfCaves];
+            var caves = new Cave[numberOfCaves];
 
 //iterating backwards so we have the last node to calculate distance from from the beginning
             for (int i = numberOfCaves - 1; i >= 0; i--)
@@ -200,22 +55,36 @@ namespace Caves
                 var coordinates = caveCoordinates.Skip(i * 2).Take(2).ToArray();
                 var newCaveLocation = new Point(coordinates[0], coordinates[1]);
 
+                //destination cave
                 if (i == numberOfCaves - 1)
                 {
-                    caves[i] = new Tuple<Point, double>(newCaveLocation, 0);
+                    caves[i] = new Cave
+                    {
+                        DistanceToEnd = 0, Index = i, Location = newCaveLocation,
+                        ShortestPathFromStart = Double.MaxValue
+                    };
                 }
-
-                caves[i] = new Tuple<Point, double>(newCaveLocation,
-                    Point.Subtract(caves[numberOfCaves - 1].Item1, newCaveLocation).Length);
+                else
+                {
+                    caves[i] = new Cave
+                    {
+                        Index = i, Location = newCaveLocation, DistanceToEnd =
+                            Point.Subtract(caves[numberOfCaves - 1].Location, newCaveLocation).Length,
+                        ShortestPathFromStart = double.MaxValue
+                    };
+                }
             }
 
             return caves;
         }
 
-        static Connections GetConnections(Tuple<Point, double>[] caves, Connections connections, int numberOfCaves,
+
+        static Connections GetConnections(Cave[] caves, Connections connections, int numberOfCaves,
             int[] rawConnections)
         {
-            for (int i = 0; i < numberOfCaves; i++)
+            for (int i = 0;
+                i < numberOfCaves;
+                i++)
             {
                 for (int j = 0; j < numberOfCaves; j++)
                 {
@@ -228,7 +97,6 @@ namespace Caves
 
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-
             connections.Sort(numberOfCaves, caves);
             watch.Stop();
             Console.WriteLine($"Time taken to sort= {watch.ElapsedMilliseconds}");

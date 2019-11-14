@@ -3,6 +3,7 @@
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Caves" t="IncludeRecursive">
+        <e p="AStar.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Cave.cs" t="Include" />
         <e p="Caves.csproj" t="IncludeRecursive" />
