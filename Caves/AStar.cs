@@ -9,7 +9,7 @@ namespace Caves
     {
         public static string Pathfinder(Cave[] caves, Connections connections)
         {
-            var pathTakenString = "1,";
+            var pathTakenString = "1 ";
 
             double pathLength = 0;
             //start at first node

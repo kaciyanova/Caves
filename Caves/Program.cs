@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using static Caves.ExtensionMethods;
 
 namespace Caves
 {
@@ -10,24 +9,31 @@ namespace Caves
     {
         static void Main(string[] args)
         {
-//            var watch = new System.Diagnostics.Stopwatch();
-//
-//            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
-//            Console.WriteLine($"Please enter the .cav filename");
+            foreach (var s in args)
+            {
+                Console.WriteLine(s);
+
+            }
+
+
+            //            var watch = new System.Diagnostics.Stopwatch();
+            //
+            //            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
+            //            Console.WriteLine($"Please enter the .cav filename");
             var inputFile = args[0];
             var input = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\..\..\caverns\" + inputFile + ".cav");
-//            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated30-1.cav");
-//            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated100-1.cav");
-//            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated500-1.cav");
-//            input = "7,2,8,3,2,14,5,7,6,11,2,11,6,14,1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0";
-
-//            watch.Start();
-
+            ////            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated30-1.cav");
+            ////            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated100-1.cav");
+            ////            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated500-1.cav");
+            ////            input = "7,2,8,3,2,14,5,7,6,11,2,11,6,14,1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0";
+            //
+            ////            watch.Start();
+            //
             var outputFile = inputFile + ".csn";
             System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\..\..\output\" + outputFile,ParseLocations(input));
 
-//            watch.Stop();
-//            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
+            //            watch.Stop();
+            //            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
         }
 
         static string ParseLocations(string input)

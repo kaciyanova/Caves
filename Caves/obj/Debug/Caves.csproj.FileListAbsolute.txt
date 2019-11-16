@@ -4,3 +4,9 @@
 /Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.csproj.CoreCompileInputs.cache
 /Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.exe
 /Users/Kaci/Documents/Uni/AI/Coursework/Caves/Caves/obj/Debug/Caves.pdb
+D:\Uni\AI\Caves\Caves\bin\Debug\Caves.exe
+D:\Uni\AI\Caves\Caves\bin\Debug\Caves.pdb
+D:\Uni\AI\Caves\Caves\obj\Debug\Caves.csprojAssemblyReference.cache
+D:\Uni\AI\Caves\Caves\obj\Debug\Caves.csproj.CoreCompileInputs.cache
+D:\Uni\AI\Caves\Caves\obj\Debug\Caves.exe
+D:\Uni\AI\Caves\Caves\obj\Debug\Caves.pdb

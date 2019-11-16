@@ -2,8 +2,7 @@
 @echo off
 set STARTTIME=%TIME%
 
-rem Caves.exe %1
-
+Caves.exe %1
 
 set ENDTIME=%TIME%
 

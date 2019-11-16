@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="AStar.cs" />
     <Compile Include="Cave.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Connections.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Program.cs" />
