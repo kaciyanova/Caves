@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,9 +7,9 @@ namespace Caves
 {
     public class AStar
     {
-        public static void Pathfinder(Cave[] caves, Connections connections)
+        public static string Pathfinder(Cave[] caves, Connections connections)
         {
-            var pathTakenString = "1 ";
+            var pathTakenString = "1,";
 
             double pathLength = 0;
             //start at first node
@@ -37,9 +38,25 @@ namespace Caves
 
                 if (currentExploringCaveIndex == caves.Length - 1)
                 {
+                    var currentReconstructingCaveIndex = caves.Length - 1;
+                    var reversePath = new List<int>();
+
+                    while (currentReconstructingCaveIndex != 0)
+                    {
+                        reversePath.Add(currentReconstructingCaveIndex);
+                        currentReconstructingCaveIndex = caves[currentReconstructingCaveIndex].ParentIndex;
+                    }
+
+                    reversePath.Reverse();
+
+                    pathTakenString= String.Concat(pathTakenString,reversePath.Select(x=>(x+1).ToString()).Aggregate((a,b)=>a+' '+b));
+
+                    Console.WriteLine(pathTakenString);
+
+                    
                     Console.WriteLine($"Done!");
 
-                    return;
+                    return pathTakenString;
 //                    return pathTakenString + ", " + currentExploringCaveIndex;
                 }
 
@@ -84,7 +101,7 @@ namespace Caves
                     }
                     else if (closed.Contains(node.Item1))
                     {
-                        if (caves[node.Item1].TotalCost<totalCost)
+                        if (caves[node.Item1].TotalCost < totalCost)
                         {
                             continue;
                         }
@@ -190,6 +207,7 @@ namespace Caves
             }
 
             Console.WriteLine($"No path found!");
+            return "0";
         }
     }
 }
