@@ -11,8 +11,8 @@ namespace Caves
         static void Main(string[] args)
         {
             var watch = new System.Diagnostics.Stopwatch();
-            var input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/1k/generated1000-1.cav");
-            //input = "7,2,8,3,2,14,5,7,6,11,2,11,6,14,1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0";
+            var input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/1k/generated1000-2.cav");
+//            input = "7,2,8,3,2,14,5,7,6,11,2,11,6,14,1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0";
 
             watch.Start();
 
@@ -60,21 +60,20 @@ namespace Caves
                 {
                     caves[i] = new Cave
                     {
-                        DistanceToEnd = 0, Index = i, Location = newCaveLocation,
-                        ShortestPathFromStart = Double.MaxValue
+                        EstimatedDistanceToEnd = 0, Index = i, Location = newCaveLocation,
+                        ShortestPathFromStartCost = Double.MaxValue
                     };
                 }
                 else
                 {
                     caves[i] = new Cave
                     {
-                        Index = i, Location = newCaveLocation, DistanceToEnd =
+                        Index = i, Location = newCaveLocation, EstimatedDistanceToEnd =
                             Point.Subtract(caves[numberOfCaves - 1].Location, newCaveLocation).Length,
-                        ShortestPathFromStart = double.MaxValue
+                        ShortestPathFromStartCost = double.MaxValue
                     };
                 }
             }
-
             return caves;
         }
 
@@ -90,16 +89,10 @@ namespace Caves
                 {
                     if (rawConnections[i * numberOfCaves + j] == 1)
                     {
-                        connections.Add(j, i, Point.Subtract(caves[j].Item1, caves[i].Item1).Length);
+                        connections.Add(j, i, Point.Subtract(caves[j].Location, caves[i].Location).Length);
                     }
                 }
             }
-
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
-            connections.Sort(numberOfCaves, caves);
-            watch.Stop();
-            Console.WriteLine($"Time taken to sort= {watch.ElapsedMilliseconds}");
             return connections;
         }
     }

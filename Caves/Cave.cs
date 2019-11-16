@@ -3,41 +3,47 @@ using System.Windows;
 
 namespace Caves
 {
-    class Cave
+    public class Cave
     {
         public int Index { get; set; }
         public Point Location { get; set; }
-        public double DistanceToEnd { get; set; }
-        public double ShortestPathFromStart { get; set; }
+        //hCost
+        public double EstimatedDistanceToEnd { get; set; }
+        //gCost
+        public double ShortestPathFromStartCost { get; set; }
+        //fCost
+        public double TotalCost { get; set; }
+
+        public int ParentIndex { get; set; }
 //        
 //        int Index;
 //        Point Location;
-//        double DistanceToEnd;
-//        double ShortestPathFromStart;
+//        double EstimatedDistanceToEnd;
+//        double ShortestPathFromStartCost;
 //
 //
 //        public Cave(int index, Point location)
 //        {
-//            DistanceToEnd = 0;
+//            EstimatedDistanceToEnd = 0;
 //            Index = index;
 //            Location = location;
-//            ShortestPathFromStart = double.MaxValue;
+//            ShortestPathFromStartCost = double.MaxValue;
 //        }
 //        
 //        public Cave(int index, Point location, double distanceToEnd)
 //        {
-//            DistanceToEnd = distanceToEnd;
+//            EstimatedDistanceToEnd = distanceToEnd;
 //            Index = index;
 //            Location = location;
-//            ShortestPathFromStart = double.MaxValue;
+//            ShortestPathFromStartCost = double.MaxValue;
 //        }
 //
 //        public Cave(int index, Point location, double distanceToEnd, double shortestPathFromStart)
 //        {
-//            DistanceToEnd = distanceToEnd;
+//            EstimatedDistanceToEnd = distanceToEnd;
 //            Index = index;
 //            Location = location;
-//            ShortestPathFromStart = shortestPathFromStart;
+//            ShortestPathFromStartCost = shortestPathFromStart;
 //        }
     }
 }
