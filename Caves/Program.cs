@@ -15,7 +15,7 @@ namespace Caves
 //            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
 //            Console.WriteLine($"Please enter the .cav filename");
             var inputFile = args[0];
-            var input = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + inputFile + ".cav");
+            var input = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\..\..\caverns\" + inputFile + ".cav");
 //            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated30-1.cav");
 //            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated100-1.cav");
 //            input = System.IO.File.ReadAllText(@"/Users/Kaci/Documents/Uni/AI/Coursework/caverns/generated500-1.cav");
@@ -24,7 +24,7 @@ namespace Caves
 //            watch.Start();
 
             var outputFile = inputFile + ".csn";
-            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\" + outputFile,ParseLocations(input));
+            System.IO.File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\..\..\output\" + outputFile,ParseLocations(input));
 
 //            watch.Stop();
 //            Console.WriteLine($"Time taken= {watch.ElapsedMilliseconds}");
