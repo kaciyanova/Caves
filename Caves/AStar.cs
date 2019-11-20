@@ -1,22 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static System.String;
 
 namespace Caves
 {
+    /// <summary>
+    /// A* pathfinding algorithm, finds shortest path from start cave to end cave
+    /// </summary>
     public class AStar
     {
         public static string Pathfinder(Cave[] caves, Connections connections)
         {
             var pathTakenString = "1 ";
 
-            double pathLength = 0;
-            //start at first node
-            var currentExploringCaveIndex = 0;
-            bool noPathPossible = false;
-
+            //caves to explore
             var open = new PriorityQueue<Cave>();
+            //caves already explored
             var closed = new List<int>();
 
             caves[0].ShortestPathFromStartCost = 0;
@@ -31,16 +31,18 @@ namespace Caves
 
                 //pops lowest cost cave in open list
                 var currentExploringCave = open.Dequeue();
-                currentExploringCaveIndex = currentExploringCave.Index;
+                var currentExploringCaveIndex = currentExploringCave.Index;
 
-                Console.WriteLine($"Exploring cave: {currentExploringCaveIndex + 1}");
-//                Console.WriteLine($"Total path length: {pathLength}");
-
+                //if we're at destination cave
                 if (currentExploringCaveIndex == caves.Length - 1)
                 {
-                    var currentReconstructingCaveIndex = caves.Length - 1;
+                    var currentReconstructingCaveIndex = currentExploringCaveIndex;
                     var reversePath = new List<int>();
 
+                    //uncomment to print total pathlength to console
+//                    Console.WriteLine("Pathlength: "+caves[currentReconstructingCaveIndex].ShortestPathFromStartCost);
+
+                    //starting at destination gets parent of node and goes all the way back up to first cave
                     while (currentReconstructingCaveIndex != 0)
                     {
                         reversePath.Add(currentReconstructingCaveIndex);
@@ -49,15 +51,9 @@ namespace Caves
 
                     reversePath.Reverse();
 
-                    pathTakenString= String.Concat(pathTakenString,reversePath.Select(x=>(x+1).ToString()).Aggregate((a,b)=>a+' '+b));
-
-                    Console.WriteLine(pathTakenString);
-
-                    
-                    Console.WriteLine($"Done!");
+                    pathTakenString = Concat(pathTakenString, reversePath.Select(x => (x + 1).ToString()).Aggregate((a, b) => a + ' ' + b));
 
                     return pathTakenString;
-//                    return pathTakenString + ", " + currentExploringCaveIndex;
                 }
 
                 closed.Add(currentExploringCaveIndex);
@@ -67,13 +63,12 @@ namespace Caves
                 //expanding paths from cave
                 for (int i = 0; i < pathsFromCurrentCave.Count; i++)
                 {
+                    //lowest cost path from cave
                     var node = pathsFromCurrentCave[i];
-                    Console.WriteLine($"Evaluating path to: {node.Item1 + 1}");
 
+                    //if the node was already explored
                     if (closed.Contains(node.Item1))
                     {
-                        Console.WriteLine($"Cave {node.Item1 + 1} already explored ");
-
                         continue;
                     }
 
@@ -81,18 +76,13 @@ namespace Caves
                     var pathCost = currentExploringCave.ShortestPathFromStartCost + node.Item2;
                     var totalCost = pathCost + caves[node.Item1].EstimatedDistanceToEnd;
 
-                    Console.WriteLine($"Path Cost: {pathCost}");
 
                     if (open.Contains(caves[node.Item1]))
                     {
                         if (pathCost < caves[node.Item1].ShortestPathFromStartCost)
                         {
-                            Console.WriteLine(
-                                $"Shorter Path found, previous parent & path cost: {caves[node.Item1].ParentIndex + 1},{caves[node.Item1].ShortestPathFromStartCost}");
-
-                            //better path than before, changes parent to current cave
+                           //found better path than existed before, changes parent to current cave
                             caves[node.Item1].ParentIndex = currentExploringCaveIndex;
-                            Console.WriteLine($"New parent : {caves[node.Item1].ParentIndex + 1}");
 
                             //new path costs
                             caves[node.Item1].ShortestPathFromStartCost = pathCost;
@@ -101,112 +91,23 @@ namespace Caves
                     }
                     else if (closed.Contains(node.Item1))
                     {
-                        if (caves[node.Item1].TotalCost < totalCost)
-                        {
-                            continue;
-                        }
-                        else
+                        //if the node was on the closed list but we've found a cheaper way to get to it we put it back on the open list
+                        if (caves[node.Item1].TotalCost > totalCost)
                         {
                             open.Enqueue(caves[node.Item1]);
                         }
                     }
                     else
                     {
+                        //if we haven't visited the node yet populate scores and push to open list
                         caves[node.Item1].ParentIndex = currentExploringCaveIndex;
                         caves[node.Item1].ShortestPathFromStartCost = pathCost;
                         caves[node.Item1].TotalCost = totalCost;
                         open.Enqueue(caves[node.Item1]);
                     }
                 }
-
-//
-//                for (int i = 0; i < pathsFromCurrentCave.Count; i++)
-//                {
-//                    var newcost = cost +
-//                    if (!closed.Contains(currentExploringCaveIndex))
-//                    {
-//                    }
-//
-//                    if (open.Contains(pathsFromCurrentCave[i].Item1) &&)
-//                    {
-//                    }
-//                }
-//            }
-//
-//
-//            do
-//            {
-//                open.Enqueue(currentExploringCaveIndex);
-//
-//                var pathsFromCurrentCave = connections.Count(currentExploringCaveIndex);
-//
-//                for (int i = 0; i < pathsFromCurrentCave; i++)
-//                {
-//                    var neighbourToExplore = connections.ReturnPaths(currentExploringCaveIndex)[i];
-//                    if (closed.Contains(neighbourToExplore.Item1))
-//                    {
-//                        continue;
-//                    }
-//
-//                    if (!open.Contains(caves[neighbourToExplore.Item1]))
-//                    {
-//                    }
-//
-//                    var closestCave = connections.ReturnPath(currentExploringCaveIndex, i);
-//
-//                    //checks if lowest cost cave is a dead end
-//                    if (connections.Count(closestCave.Item1) > 0)
-//                    {
-//                        break;
-//                    }
-//
-//                    if (i == pathsFromCurrentCave - 1 && connections.Count(closestCave.Item1) == 0)
-//                    {
-//                        noPathPossible = true;
-//                        break;
-//                    }
-//                }
-//            } while (currentExploringCaveIndex != caves.Length)
-//
-//
-//            //set cave to explore to lowest cost one
-//            while (currentExploringCaveIndex != caves.Length - 1)
-//            {
-//                var nextCave = connections.ReturnPath(currentExploringCaveIndex, 0);
-////                Tuple<int, double> nextCave;
-//
-//                var pathsFromCurrentCave = connections.Count(currentExploringCaveIndex);
-//
-//                for (int i = 0; i < pathsFromCurrentCave; i++)
-//                {
-//                    nextCave = connections.ReturnPath(currentExploringCaveIndex, i);
-//                    //checks if lowest cost cave is a dead end
-//                    if (connections.Count(nextCave.Item1) > 0)
-//                    {
-//                        break;
-//                    }
-//
-//                    if (i == pathsFromCurrentCave - 1 && connections.Count(nextCave.Item1) == 0)
-//                    {
-//                        noPathPossible = true;
-//                        break;
-//                    }
-//                }
-//
-//                if (noPathPossible)
-//                {
-//                    shortestPath = "0";
-//                    break;
-//                }
-//
-//                pathLength += nextCave.Item2;
-
-//                Console.WriteLine($"Exploring cave: {nextCave.Item1 + 1}");
-
-//                shortestPath = shortestPath + (nextCave.Item1 + 1) + " ";
             }
-
-            Console.WriteLine($"No path found!");
+            //no path found
             return "0";
         }
     }

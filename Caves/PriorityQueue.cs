@@ -12,7 +12,7 @@ namespace Caves
 {
     /// <summary>
     /// Priority Queue data structure
-    /// Modified by Kaci to compare by total cost of cave 
+    /// Modified by Kaci Y to compare by total cost of cave 
     /// </summary>
     public class PriorityQueue<T>
     where T:Cave
