@@ -6,9 +6,9 @@ using static System.String;
 namespace Caves
 {
     /// <summary>
-    /// A* pathfinding algorithm, finds shortest path from start cave to end cave
+    /// Fsinds path from start cave to end cave
     /// </summary>
-    public class AStar
+    public class FindPath
     {
         public static string Pathfinder(Cave[] caves, Connections connections)
         {
@@ -40,7 +40,7 @@ namespace Caves
                     var reversePath = new List<int>();
 
                     //uncomment to print total pathlength to console
-                    Console.WriteLine("Pathlength: "+caves[currentReconstructingCaveIndex].ShortestPathFromStartCost);
+                    //Console.WriteLine("Pathlength: "+caves[currentReconstructingCaveIndex].ShortestPathFromStartCost);
 
                     //starting at destination gets parent of node and goes all the way back up to first cave
                     while (currentReconstructingCaveIndex != 0)

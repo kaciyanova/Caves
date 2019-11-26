@@ -39,7 +39,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AStar.cs" />
+    <Compile Include="FindPath.cs" />
     <Compile Include="Cave.cs" />
     <Compile Include="Connections.cs" />
     <Compile Include="PriorityQueue.cs" />
