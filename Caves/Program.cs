@@ -14,8 +14,10 @@ namespace Caves
         static void Main(string[] args)
         {
             var inputFile = args[0];
+//            var input = System.IO.File.ReadAllText("D:\\Uni\\AI\\Caves\\TEST\\generated2000-1.cav");
             var input = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + inputFile + ".cav");
             var outputFile = inputFile + ".csn";
+//            var outputFile = "test" + ".csn";
 
             var caveData = Array.ConvertAll(input.Split(','), int.Parse);
 
@@ -64,10 +66,32 @@ namespace Caves
                 {
                     caves[i] = new Cave
                     {
+                        //euclidean distance heuristic (inadmissible
+                        //                        Index = i,
+                        //                        Location = newCaveLocation,
+                        //                        EstimatedDistanceToEnd =
+                        //                            Point.Subtract(caves[numberOfCaves - 1].Location, newCaveLocation).Length,
+                        //                        ShortestPathFromStartCost = double.MaxValue
+
+                        //euclidean distance heuristic (inadmissible
+//                        Index = i,
+//                        Location = newCaveLocation,
+//                        EstimatedDistanceToEnd =
+//                           Math.Sqrt( Math.Pow(Math.Abs(caves[numberOfCaves - 1].Location.X - newCaveLocation.X),2) + Math.Pow(Math.Abs(caves[numberOfCaves - 1].Location.Y - newCaveLocation.Y),2)),
+//                        ShortestPathFromStartCost = double.MaxValue
+
+                        //manhattan (admissible)
+//                        Index = i,
+//                        Location = newCaveLocation,
+//                        EstimatedDistanceToEnd =
+//                            Math.Abs(caves[numberOfCaves - 1].Location.X- newCaveLocation.X ) +Math.Abs(caves[numberOfCaves - 1].Location.Y - newCaveLocation.Y),
+//                        ShortestPathFromStartCost = double.MaxValue
+
+                        //dijkstra (no heuristic)
                         Index = i,
                         Location = newCaveLocation,
                         EstimatedDistanceToEnd =
-                            Point.Subtract(caves[numberOfCaves - 1].Location, newCaveLocation).Length,
+                            0,
                         ShortestPathFromStartCost = double.MaxValue
                     };
                 }
@@ -92,6 +116,7 @@ namespace Caves
                     }
                 }
             }
+
 
             return connections;
         }

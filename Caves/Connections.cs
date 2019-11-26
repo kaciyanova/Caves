@@ -41,5 +41,11 @@ namespace Caves
         {
             return connections[index];
         }
+
+        //returns smallest path on map
+        public double SmallestPath()
+        {
+            return connections.OrderBy(c => c.Min(x => x.Item2)).First().OrderBy(x => x.Item2).First().Item2;
+        }
     }
 }

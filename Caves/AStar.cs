@@ -40,7 +40,7 @@ namespace Caves
                     var reversePath = new List<int>();
 
                     //uncomment to print total pathlength to console
-//                    Console.WriteLine("Pathlength: "+caves[currentReconstructingCaveIndex].ShortestPathFromStartCost);
+                    Console.WriteLine("Pathlength: "+caves[currentReconstructingCaveIndex].ShortestPathFromStartCost);
 
                     //starting at destination gets parent of node and goes all the way back up to first cave
                     while (currentReconstructingCaveIndex != 0)
